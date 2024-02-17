@@ -12,14 +12,14 @@
             <form id="delete-form" action="{{ route('destroy') }}" method="POST">
                 @csrf
                 <input type="hidden" name="memo_id" value="{{ $edit_memo[0]['id'] }}" />
-                <i class="fa-solid fa-trash pointer me-3" onclick="deleteHandle(event);"></i>
+                <i class="fa-solid fa-trash-can pointer me-3" onclick="deleteHandle(event);"></i>
             </form>
         </h5>
-        <form class="card-body my-card-body" action="{{ route('update') }}" method="POST">
+        <form class="card-body my-card-body my-card-body-gray" action="{{ route('update') }}" method="POST">
             @csrf
             <input type="hidden" name="memo_id" value="{{ $edit_memo[0]['id'] }}" />
-            <div class="form-group">
-                <textarea class="form-control mb-3" name="content" rows="3" placeholder="ここにメモを入力">{{
+            <div class="form-group mb-3 h-50">
+                <textarea class="form-control h-100" name="content" rows="3" placeholder="ここにメモを入力">{{
                     $edit_memo[0]['content'] }}</textarea>
             </div>
         @error('content')
@@ -32,7 +32,7 @@
             </div>
         @endforeach
             <input type="text" class="form-control w-50 mb-3" name="new_tag" placeholder="新しいタグ" />
-            <button type="submit" class="btn btn-primary">更新</button>
+            <button type="submit" class="btn btn-success">更新</button>
         </form>
     </div>
 </div>

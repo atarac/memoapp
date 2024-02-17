@@ -24,9 +24,10 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-dark shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand fw-bold text-white" href="{{ url('/') }}">
+                    <i class="fa-solid fa-file-pen"></i>
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -45,18 +46,18 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link text-white" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
@@ -85,29 +86,31 @@
                         <h5 class="card-header">タグ一覧</h5>
                         <div class="card-body my-card-body">
                             <p class="card-text">
-                                <a href="/" class="card-text d-block mb-2">すべて表示</a>
+                                <a href="/" class="card-text d-block mb-2 text-success">すべて表示</a>
                             @foreach($tags as $tag)
-                                <a href="/?tag={{$tag['id']}}" class="card-text d-block elipsis mb-2">{{ $tag['name']}}</a>
+                                <a href="/?tag={{$tag['id']}}" class="card-text d-block elipsis mb-2 text-decoration-none text-dark">{{ $tag['name']}}</a>
                             @endforeach
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-4 p-0">
+                <div class="col-sm-12 col-md-3 p-0">
                     <div class="card">
                         <h5 class="card-header d-flex justify-content-between">メモ一覧
                             <a href="{{ route('home') }}">
-                                <i class="fa-solid fa-circle-plus"></i>
+                                <span>
+                                    <i class="fa-solid fa-plus text-white"></i>
+                                </span>
                             </a>
                         </h5>
                         <div class="card-body my-card-body">
                         @foreach($memos as $memo)
-                            <a href="/edit/{{$memo['id']}}" class="card-text d-block elipsis mb-2">{{ $memo['content']}}</a>
+                            <a href="/edit/{{$memo['id']}}" class="card-text d-block elipsis mb-2 text-decoration-none text-dark">{{ $memo['content']}}</a>
                         @endforeach
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-6 p-0">
+                <div class="col-sm-12 col-md-7 p-0">
                     @yield('content')
                 </div>
             </div>

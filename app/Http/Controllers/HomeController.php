@@ -92,8 +92,11 @@ class HomeController extends Controller
         DB::transaction(function() use($posts) {
             Memo::where('id', $posts['memo_id'])->update(['content' => $posts['content']]);
             MemoTag::where('memo_id', '=', $posts['memo_id'])->delete();
-            foreach($posts['tags'] as $tag){
-                MemoTag::insert(['memo_id' => $posts['memo_id'], 'tag_id' => $tag]);
+
+            if(isset($posts['tags']) && is_array($posts['tags'])) {
+                foreach($posts['tags'] as $tag){
+                    MemoTag::insert(['memo_id' => $posts['memo_id'], 'tag_id' => $tag]);
+                }
             }
 
             $tag_exists = Tag::where('user_id', '=', \Auth::id())->where('name', '=', $posts['new_tag'])->exists();
