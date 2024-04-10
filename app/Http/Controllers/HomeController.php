@@ -127,4 +127,16 @@ class HomeController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function list()
+    {
+        $userId = \Auth::id();  // 認証されたユーザーのIDを取得
+        $tags = Tag::where('user_id', $userId)  // ユーザーIDに基づくフィルタ
+                ->whereNull('deleted_at')    // 削除されていないタグのみ
+                ->orderBy('id', 'DESC')      // IDによる降順で並べ替え
+                ->get();
+
+        return response()->json($tags);  // タグをJSON形式で返す
+    }
+
 }
