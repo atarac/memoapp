@@ -118,4 +118,13 @@ class HomeController extends Controller
         Memo::where('id', $posts['memo_id'])->update(['deleted_at' => date("y-m-d H:i:s", time())]);
         return redirect( route('home') );
     }
+
+    public function tag_update(Request $request, $id)
+    {
+        $tag = Tag::find($id);
+        $tag->name = $request->name;
+        $tag->save();
+
+        return response()->json(['success' => true]);
+    }
 }

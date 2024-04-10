@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="container p-0">
+<div class="p-0">
     <div class="card">
         <h5 class="card-header d-flex justify-content-between">
             メモ編集
@@ -18,7 +18,7 @@
         <form class="card-body my-card-body my-card-body-gray" action="{{ route('update') }}" method="POST">
             @csrf
             <input type="hidden" name="memo_id" value="{{ $edit_memo[0]['id'] }}" />
-            <div class="form-group mb-3 h-50">
+            <div class="form-group mb-3 h-60">
                 <textarea class="form-control h-100" name="content" rows="3" placeholder="ここにメモを入力">{{
                     $edit_memo[0]['content'] }}</textarea>
             </div>

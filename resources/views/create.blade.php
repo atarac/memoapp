@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container p-0">
+<div class="p-0">
     <div class="card">
         <h5 class="card-header">新規メモ作成</h5>
         <form class="card-body my-card-body my-card-body-gray" action="{{ route('store') }}" method="POST">
             @csrf
-            <div class="form-group mb-3 h-75">
+            <div class="form-group mb-3 h-60">
                 <textarea class="form-control h-100" name="content" rows="3" placeholder="ここにメモを入力"></textarea>
             </div>
         @error('content')

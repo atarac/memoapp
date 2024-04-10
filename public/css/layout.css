@@ -6,7 +6,7 @@
   background-color: rgba(33, 37, 41, 0.1);
 }
 
-.elipsis {
+.ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -47,4 +47,35 @@
 
 .dropdown-item:active {
   background-color: #198754;
+}
+
+.tag-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap; 
+  width: 100%;
+}
+
+.tag-container i {
+  display: none;
+  transition: opacity 0.3s;
+}
+
+.tag-container:hover i {
+  display: inline-block;
+  opacity: 0.3; 
+}
+
+.tag-container i:hover {
+  opacity: 1.0; 
+}
+
+.h-60 {
+  height: 60%;
+}
+
+.adj-margin {
+  margin-right: 0;
+  margin-left: 0;
 }

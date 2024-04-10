@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/tag-edit.js') }}" defer></script>
     @yield('javascript')
 
     <!-- Fonts -->
@@ -80,15 +81,20 @@
         </nav>
 
         <main>
-            <div class="row">
+            <div class="row adj-margin">
                 <div class="col-sm-12 col-md-2 p-0">
                     <div class="card">
                         <h5 class="card-header">タグ一覧</h5>
                         <div class="card-body my-card-body">
                             <p class="card-text">
-                                <a href="/" class="card-text d-block mb-2 text-success">すべて表示</a>
+                                <a href="/" class="card-text d-block mb-4 text-success">すべて表示</a>
                             @foreach($tags as $tag)
-                                <a href="/?tag={{$tag['id']}}" class="card-text d-block elipsis mb-2 text-decoration-none text-dark">{{ $tag['name']}}</a>
+                                <div class="tag-container mb-2">
+                                    <a href="/?tag={{ $tag['id'] }}" class="card-text d-block text-decoration-none text-dark ellipsis">
+                                        <span class="tag-name" data-id="{{ $tag['id'] }}">{{ ($tag['name']) }}</span>
+                                    </a>
+                                    <i class="fa fa-pen pointer" onclick="enableEdit(this)"></i>
+                                </div>
                             @endforeach
                             </p>
                         </div>
@@ -99,13 +105,13 @@
                         <h5 class="card-header d-flex justify-content-between">メモ一覧
                             <a href="{{ route('home') }}">
                                 <span>
-                                    <i class="fa-solid fa-plus text-white"></i>
+                                    <i class="fa-solid fa-plus text-white me-1"></i>
                                 </span>
                             </a>
                         </h5>
                         <div class="card-body my-card-body">
                         @foreach($memos as $memo)
-                            <a href="/edit/{{$memo['id']}}" class="card-text d-block elipsis mb-2 text-decoration-none text-dark">{{ $memo['content']}}</a>
+                            <a href="/edit/{{$memo['id']}}" class="card-text d-block ellipsis mb-2 text-decoration-none text-dark">{{ $memo['content']}}</a>
                         @endforeach
                         </div>
                     </div>
