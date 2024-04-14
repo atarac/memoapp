@@ -25,12 +25,14 @@
         @error('content')
             <div class="alert alert-danger">メモ内容を入力してください</div>
         @enderror
-        @foreach($tags as $t)
-            <div class="form-check form-check-inline mb-3">
-                <input class="form-check-input" type="checkbox" name="tags[]" id="{{ $t['id'] }}" value="{{ $t['id'] }}" {{ in_array($t['id'], $include_tags) ? 'checked' : '' }} />
-                <label class="form-check-label" for="{{ $t['id'] }}">{{ $t['name'] }}</label>
+            <div id="tags-container">
+            @foreach($tags as $t)
+                <div class="form-check form-check-inline mb-3">
+                    <input class="form-check-input" type="checkbox" name="tags[]" id="{{ $t['id'] }}" value="{{ $t['id'] }}" {{ in_array($t['id'], $include_tags) ? 'checked' : '' }} />
+                    <label class="form-check-label" for="{{ $t['id'] }}">{{ $t['name'] }}</label>
+                </div>
+            @endforeach
             </div>
-        @endforeach
             <input type="text" class="form-control w-50 mb-3" name="new_tag" placeholder="新しいタグ" />
             <button type="submit" class="btn btn-success">更新</button>
         </form>
