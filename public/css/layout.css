@@ -1,5 +1,6 @@
 .my-card-body {
   height: calc(100vh - (55px + 48px));
+  overflow-y: auto;
 }
 
 .my-card-body-gray {
@@ -69,6 +70,11 @@
 
 .tag-container i:hover {
   opacity: 1.0; 
+}
+
+#tags-container {
+  max-height: 80px;
+  overflow: auto;
 }
 
 .h-60 {
