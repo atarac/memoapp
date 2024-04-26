@@ -82,10 +82,16 @@ class HomeController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function list()
-    {
+    public function tags_list($id)
+    {        
+        $edit_memo = Memo::getMemoWithTags($id);
+        $include_tags = $edit_memo->pluck('tag_id')->all();
         $tags = Tag::getTagsForCurrentUser();
-        return response()->json($tags);
+
+        return response()->json([
+            'include_tags' => $include_tags,
+            'tags' => $tags
+        ]);
     }
 
 }

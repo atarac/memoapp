@@ -15,11 +15,11 @@
                 <i class="fa-solid fa-trash-can pointer me-3" onclick="deleteHandle(event);"></i>
             </form>
         </h5>
-        <form class="card-body my-card-body my-card-body-gray" action="{{ route('update') }}" method="POST">
+        <form class="card-body my-card-body my-card-body-gray edit-form" action="{{ route('update') }}" method="POST">
             @csrf
             <input type="hidden" name="memo_id" value="{{ $edit_memo[0]['id'] }}" />
             <div class="form-group mb-3 h-60">
-                <textarea class="form-control h-100" name="content" rows="3" placeholder="ここにメモを入力">{{
+                <textarea class="form-control h-100 editing-text" name="content" rows="3" placeholder="ここにメモを入力">{{
                     $edit_memo[0]['content'] }}</textarea>
             </div>
         @error('content')

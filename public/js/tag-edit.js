@@ -1,47 +1,38 @@
 function enableEdit(element) {
     let tagNameElement = element.previousElementSibling.getElementsByTagName('span')[0];
     editTagName(tagNameElement);
-  }
-  
-  function editTagName(tagNameElement) {
+}
+
+function editTagName(tagNameElement) {
     let currentText = tagNameElement.innerText;
-    let parentLink = tagNameElement.parentNode; // <span>の親要素である<a>を取得
-    let originalHref = parentLink.getAttribute('href'); // 元のhrefを保存
-  
-    // href属性を一時的に無効化
+    let parentLink = tagNameElement.parentNode;
+    let originalHref = parentLink.getAttribute('href');
+
     parentLink.removeAttribute('href');
-  
+
     tagNameElement.innerHTML = `<input type="text" class="form-control" value="${currentText}">`;
     let inputField = tagNameElement.firstChild;
     inputField.focus();
-  
-    let enterPressed = false;
-  
-    // Enterキーが押された時のみ保存を実行するイベントリスナーを追加
+
     inputField.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
-            event.preventDefault(); // フォームの送信を防ぐ
+            event.preventDefault();
             saveTagName(this, tagNameElement.dataset.id, parentLink, originalHref);
-            enterPressed = true;
-            this.blur(); // エンターキーで保存後、フォーカスを外す
+            inputField.blur();
         }
     });
-  
-    // オプショナル: フォーカスを失うイベントでの挙動を制御
-    inputField.addEventListener('blur', function(event) {
-        if (enterPressed) {
-            enterPressed = false;
-            return;
+
+    inputField.addEventListener('blur', function() {
+        if (inputField.value !== currentText) {
+            return;  // Enterが押された場合、更新処理が行われるので何もしない
         }
-        tagNameElement.innerHTML = currentText; // フォーカスを失ったら元のテキストに戻す
-        parentLink.setAttribute('href', originalHref); // href属性を復元
+        tagNameElement.innerHTML = currentText;
+        parentLink.setAttribute('href', originalHref);
     });
-  }
+}
   
-  function saveTagName(inputElement, tagId, parentLink, originalHref) {
-    console.log('save');
+function saveTagName(inputElement, tagId, parentLink, originalHref) {
     let newValue = inputElement.value;
-    // AJAXを使用してサーバーに新しい値をPOST
     fetch(`/update-tag/${tagId}`, {
         method: 'POST',
         headers: {
@@ -52,32 +43,54 @@ function enableEdit(element) {
     }).then(response => response.json())
     .then(data => {
         if (data.success) {
-            inputElement.value = newValue;  // 入力フィールドに新しい値をセット
+            inputElement.value = newValue;
             let parentSpan = inputElement.closest('.tag-container').querySelector('.tag-name');
-            parentSpan.innerText = newValue; // SPAN要素に新しい値を表示
-            parentLink.setAttribute('href', originalHref); // href属性を復元
-            updateTagList();  // タグリストを更新する関数を呼び出す
+            parentSpan.innerText = newValue;
+            parentLink.setAttribute('href', originalHref);
+
+            let id = getMemoId();
+            updateTagsList(id);
+        } else {
+            console.error('Update failed:', data.error);
+            alert('更新に失敗しました。');
         }
     })
     .catch((error) => {
         console.error('Error:', error);
-        parentLink.setAttribute('href', originalHref); // エラー発生時にもhrefを復元
+        parentLink.setAttribute('href', originalHref);
+        alert('通信エラーが発生しました。');
     });
-  }
+}
 
-  function updateTagList() {
-    console.log('update');
-    fetch('/tags/list')  // タグリストの更新を行うエンドポイント
+function getMemoId() {
+    const editingTextArea = document.querySelector('.editing-text');
+    if (editingTextArea) {
+        const formElement = editingTextArea.closest('form');
+        if (formElement) {
+            const idInput = formElement.querySelector('input[name="memo_id"]');
+            if (idInput) {
+                return idInput.value;
+            }
+        }
+    }
+    return null;
+}
+
+function updateTagsList(id) {
+    fetch(`/tags/list/${id}`)
     .then(response => response.json())
-    .then(tags => {
+    .then(data => {
+        const { tags, include_tags } = data;
         const container = document.getElementById('tags-container');
-        container.innerHTML = ''; // コンテナをクリア
+        container.innerHTML = '';
         tags.forEach(tag => {
-            const checkedAttribute = tag.selected ? 'checked' : '';
-            container.innerHTML += `<div class="form-check form-check-inline mb-3">
-                <input class="form-check-input" type="checkbox" name="tags[]" id="tag-${tag.id}" value="${tag.id}" ${checkedAttribute} />
-                <label class="form-check-label" for="tag-${tag.id}">${tag.name}</label>
-            </div>`;
+            const checkedAttribute = id && include_tags.includes(tag.id) ? 'checked' : '';
+            container.innerHTML += `
+                <div class="form-check form-check-inline mb-3">
+                    <input class="form-check-input" type="checkbox" name="tags[]" id="tag-${tag.id}" value="${tag.id}" ${checkedAttribute}>
+                    <label class="form-check-label" for="tag-${tag.id}">${tag.name}</label>
+                </div>
+            `;
         });
     })
     .catch(error => console.error('Error fetching tags:', error));

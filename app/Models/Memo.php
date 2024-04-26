@@ -15,7 +15,7 @@ class Memo extends Model
 
     public function getMymemo(){
         $query_tag = \Request::query('tag');
-        $query = Memo::query()->select('memos.*')
+        $query = self::query()->select('memos.*')
             ->where('user_id', '=', \Auth::id())
             ->whereNull('deleted_at')
             ->orderBy('updated_at', 'DESC');

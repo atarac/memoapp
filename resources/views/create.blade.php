@@ -4,10 +4,10 @@
 <div class="p-0">
     <div class="card">
         <h5 class="card-header">新規メモ作成</h5>
-        <form class="card-body my-card-body my-card-body-gray" action="{{ route('store') }}" method="POST">
+        <form class="card-body my-card-body my-card-body-gray create-form" action="{{ route('store') }}" method="POST">
             @csrf
             <div class="form-group mb-3 h-60">
-                <textarea class="form-control h-100" name="content" rows="3" placeholder="ここにメモを入力"></textarea>
+                <textarea class="form-control h-100 creating-text" name="content" rows="3" placeholder="ここにメモを入力"></textarea>
             </div>
         @error('content')
             <div class="alert alert-danger">メモ内容を入力してください</div>

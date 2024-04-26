@@ -12,6 +12,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/tag-edit.js') }}" defer></script>
+    <script src="{{ asset('js/memo-save.js') }}" defer></script>
     @yield('javascript')
 
     <!-- Fonts -->
