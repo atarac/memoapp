@@ -24,3 +24,4 @@ Route::post('/update', [HomeController::class, 'update'])->name('update');
 Route::post('/destroy', [HomeController::class, 'destroy'])->name('destroy');
 Route::post('/update-tag/{id}', [HomeController::class, 'tag_update'])->name('tag.update');
 Route::get('/tags/list/{id}', [HomeController::class, 'tags_list'])->name('tags.list');
+Route::post('/delete-tag/{id}', [HomeController::class, 'delete'])->name('tag.delete');

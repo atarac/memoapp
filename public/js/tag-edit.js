@@ -1,5 +1,6 @@
 function enableEdit(element) {
-    let tagNameElement = element.previousElementSibling.getElementsByTagName('span')[0];
+    let tagContainer = element.closest('.tag-container');
+    let tagNameElement = tagContainer.querySelector('.tag-name');
     editTagName(tagNameElement);
 }
 
@@ -94,4 +95,28 @@ function updateTagsList(id) {
         });
     })
     .catch(error => console.error('Error fetching tags:', error));
+}
+
+
+function tagDeletion(tagId) {
+    console.log(tagId);
+    if (confirm("タグ削除を実行しますか?")) {
+        fetch(`/delete-tag/${tagId}`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: tagId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                console.log('success');
+                alert('タグを削除しました。');
+                location.reload();
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
 }

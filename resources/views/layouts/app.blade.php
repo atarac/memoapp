@@ -94,7 +94,10 @@
                                     <a href="/?tag={{ $tag['id'] }}" class="card-text d-block text-decoration-none text-dark ellipsis">
                                         <span class="tag-name" data-id="{{ $tag['id'] }}">{{ ($tag['name']) }}</span>
                                     </a>
-                                    <i class="fa fa-pen pointer" onclick="enableEdit(this)"></i>
+                                    <div class="icons">
+                                        <i class="fa fa-pen" onclick="enableEdit(this)"></i>
+                                        <i class="fa fa-trash-can" onclick="tagDeletion('{{ $tag['id'] }}')"></i>
+                                    </div>
                                 </div>
                             @endforeach
                             </p>

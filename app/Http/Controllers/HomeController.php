@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Memo;
 use App\Models\Tag;
+use App\Models\MemoTag;
 
 class HomeController extends Controller
 {
@@ -94,4 +95,15 @@ class HomeController extends Controller
         ]);
     }
 
+    public function delete($id)
+    {
+        try {
+            $tag = Tag::findOrFail($id);
+            MemoTag::detachTagsFromTag($id);
+            $tag->delete();
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'タグが削除できませんでした。']);
+        }
+    }
 }

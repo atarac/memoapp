@@ -44,12 +44,12 @@ class Memo extends Model
 
             if(!empty($posts['new_tag'])) {
                 $tag = Tag::createIfNeeded($posts['new_tag'], \Auth::id());
-                MemoTag::attachTagToMemo($memo_id->id, $tag->id);
+                MemoTag::attachTagOrTagsToMemo($memo_id, $tag->id);
             }
             
             if(!empty($posts['tags'])) {
                 foreach($posts['tags'] as $tagId) {
-                    MemoTag::attachTagToMemo($memo_id->id, $tagId);
+                    MemoTag::attachTagOrTagsToMemo($memo_id, $tagId);
                 }
             }
         });
@@ -73,11 +73,11 @@ class Memo extends Model
             $memo->save();
 
             MemoTag::detachTagsFromMemo($memoId);
-            MemoTag::attachTagsToMemo($memoId, $tagIds);
+            MemoTag::attachTagOrTagsToMemo($memoId, $tagIds);
 
             if (!empty($newTag)) {
                 $tag = Tag::createIfNeeded($newTag, $memo->user_id);
-                MemoTag::attachTagsToMemo($memoId, [$tag->id]);
+                MemoTag::attachTagOrTagsToMemo($memoId, [$tag->id]);
             }
         });
     }
