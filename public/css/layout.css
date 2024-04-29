@@ -25,11 +25,11 @@
   }
 
   .memo-card {
-    height: 100vh;
+    height: 70vh;
   }
 
   .memo-card .my-card-body {
-    max-height: 100vh;
+    max-height: 70vh;
   }
   
 }
