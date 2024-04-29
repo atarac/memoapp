@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="p-0">
-    <div class="card">
+    <div class="card memo-card">
         <h5 class="card-header d-flex justify-content-between">
             メモ編集
             <form id="delete-form" action="{{ route('destroy') }}" method="POST">

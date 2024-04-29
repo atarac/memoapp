@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="p-0">
-    <div class="card">
+    <div class="card memo-card">
         <h5 class="card-header">新規メモ作成</h5>
         <form class="card-body my-card-body my-card-body-gray create-form" action="{{ route('store') }}" method="POST">
             @csrf

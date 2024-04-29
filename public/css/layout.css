@@ -23,6 +23,15 @@
     height: auto;
     max-height: 50vh;
   }
+
+  .memo-card {
+    height: 100vh;
+  }
+
+  .memo-card .my-card-body {
+    max-height: 100vh;
+  }
+  
 }
 
 .form-control:focus {
